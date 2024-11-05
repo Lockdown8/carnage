@@ -11,6 +11,7 @@
             padding: 0;
             height: 100%;
             overflow: hidden;
+            background-color: black; /* Fallback color if image fails to load */
         }
 
         /* Full-page background styling */
@@ -19,24 +20,53 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            background-image: url('venom.png'); /* Use your venom.png image */
+            background-image: url('venom.png'); /* Background image */
             background-size: contain; /* Ensure the image is fully displayed without cropping */
             background-repeat: no-repeat; /* Prevents image from repeating */
             background-position: center center; /* Centers the image */
-            background-color: black; /* Fallback color if image doesn’t fully cover */
         }
     </style>
 </head>
 <body>
 
 <script>
-    // JavaScript to play sound on click
-    const audio = new Audio('carnage.MP3'); // Use your carnage.mp3 audio file
+    // Initialize audio with error handling for unsupported browsers or missing files
+    let audio;
+    try {
+        audio = new Audio('carnage.MP3'); // Ensure the file name is exactly as in your repo
+    } catch (e) {
+        console.error("Audio file could not be initialized:", e);
+        alert("Your browser does not support audio playback or there was an issue loading the audio.");
+    }
 
-    // Add click event listener to play sound
-    document.body.addEventListener('click', () => {
-        audio.play();
-    });
+    // Ensure the audio object was created successfully
+    if (audio) {
+        // Attempt to load the audio file and handle any issues
+        audio.load();
+
+        // Add click event listener to play sound
+        document.body.addEventListener('click', () => {
+            audio.play().catch(error => {
+                // Catch errors during playback, such as permissions or missing file issues
+                console.error('Audio playback error:', error);
+                alert('There was an issue playing the audio. Please check if the audio file is available or compatible.');
+            });
+        });
+    } else {
+        // Display an alert if audio could not be initialized
+        alert("Audio could not be initialized. Please check your browser or file path.");
+    }
+
+    // Additional handling if background image fails to load
+    document.body.style.backgroundImage = `url('venom.png')`;
+
+    // Attempt to load the image to check if it's accessible
+    const imgTest = new Image();
+    imgTest.src = 'venom.png';
+    imgTest.onerror = function() {
+        console.error('Background image not found or could not load.');
+        alert('Background image could not load. Please check the image file path and filename.');
+    };
 </script>
 
 </body>

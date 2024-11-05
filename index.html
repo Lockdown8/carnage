@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable Sound Page</title>
+    <style>
+        /* Reset default margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Full-page background styling */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-image: url('venom.png'); /* Use your venom.png image */
+            background-size: contain; /* Ensure the image is fully displayed without cropping */
+            background-repeat: no-repeat; /* Prevents image from repeating */
+            background-position: center center; /* Centers the image */
+            background-color: black; /* Fallback color if image doesn’t fully cover */
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    // JavaScript to play sound on click
+    const audio = new Audio('carnage.MP3'); // Use your carnage.mp3 audio file
+
+    // Add click event listener to play sound
+    document.body.addEventListener('click', () => {
+        audio.play();
+    });
+</script>
+
+</body>
+</html>
